@@ -25,7 +25,7 @@ __version__ = "1.0.0"
 __license__ = "MIT"
 
 parser = argparse.ArgumentParser(description='Raspberry Pi Telegram Bot.')
-parser.add_argument("-d", "--debug", help='Enable debug log in console', action="store_true")
+parser.add_argument("-d", "--debug", help='Enable debug log in console')
 parser.add_argument("-t", "--token", help='Telegram Bot API Token', required=True)
 args = parser.parse_args()
 
@@ -35,7 +35,7 @@ TOKEN = args.token
 # Setting the log level
 logger = telebot.logger
 
-if args.debug:
+if args.debug == "true":
     telebot.logger.setLevel(logging.DEBUG)
 else:
     telebot.logger.setLevel(logging.INFO)
@@ -233,8 +233,9 @@ def initialize_lcd():
 
 # Resource CleanUp
 def destroy():
-    print('Raspberry Pi Telegram Bot is shutdown... ')
-    print('GPIO CleanUp... ')
+    logger.info('Raspberry Pi Telegram Bot is shutdown... ')
+    logger.info('GPIO CleanUp... ')
+
     GPIO.cleanup()
     lcd.clear()
     lcd.message('Shutdown...\n')
@@ -258,8 +259,7 @@ def main_loop():
 
 if __name__ == '__main__':
     try:
-        print('Raspberry Pi Telegram Bot is starting...')
-        print('Press CTRL+C to terminate Bot')
+        logger.info('Raspberry Pi Telegram Bot is starting...')
 
         main_loop()
     except KeyboardInterrupt:
