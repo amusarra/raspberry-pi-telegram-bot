@@ -1,0 +1,19 @@
+[Unit]
+Description=Raspberry Pi Telegram Bot
+Documentation=https://www.dontesta.it/2020/05/07/primo-maggio-2020-base-raspberry-pi-bot-telegram-display-lcd-rele/
+After=network-online.target
+
+[Service]
+Environment=TELEGRAM_BOT_TOKEN_API=<REPLACE_WITH_YOUR_TOKEN>
+Environment=TELEGRAM_BOT_DEBUG=true
+
+WorkingDirectory=/home/pi/raspberry-pi-telegram-bot
+ExecStart=/usr/bin/python3 raspberry_pi_telegram_bot.py --debug ${TELEGRAM_BOT_DEBUG} --token ${TELEGRAM_BOT_TOKEN_API}
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=raspberry-pi-telegram-bot
+Restart=no
+User=pi
+
+[Install]
+WantedBy=multi-user.target
